@@ -1,0 +1,24 @@
+#!/bin/bash
+WORKSPACE=~/workspace
+LINK=$WORKSPACE/ansible
+ANS1404=$WORKSPACE/ansible_1404
+ANS1804=$WORKSPACE/ansible_1804
+
+if [ "$(readlink -- "$LINK")" = $ANS1404/ ]; then
+    rm $LINK
+    ln -s $ANS1804/ $LINK
+    if [ "$(readlink -- "$LINK")" = $ANS1804/ ]; then
+        echo "using 18.04"
+    else
+        echo "switch failed"
+    fi
+elif [ "$(readlink -- "$LINK")" = $ANS1804/ ]; then
+    rm $LINK
+    ln -s $ANS1404/ $LINK
+    if [ "$(readlink -- "$LINK")" = $ANS1404/ ]; then
+        echo "using 14.04"
+    else
+        echo "switch failed"
+    fi
+fi
+

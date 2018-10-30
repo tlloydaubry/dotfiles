@@ -1,0 +1,11 @@
+#!/bin/bash
+CONTAINER=$1
+PLATFORM=~/workspace/platform
+cd $PLATFORM
+make $CONTAINER
+if [[ "$?" == "0" ]]; then
+    docker save nsone/$CONTAINER:develop | ssh vagrant docker load
+    #docker save -o $CONTAINER nsone/$CONTAINER
+    #scp $CONTAINER vagrant:~/containers/
+    #rm -f $CONTAINER
+fi

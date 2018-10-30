@@ -1,0 +1,2 @@
+maas $MAAS_USERNAME machines read | jq ".[] | \
+    {hostname:.hostname, system_id: .system_id, status:.status}" --compact-output

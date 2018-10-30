@@ -1,0 +1,2 @@
+gopass -c maas_api
+maas login maasadmin http://maas01.ewr01.nsone.co:5240/MAAS/#

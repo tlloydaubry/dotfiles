@@ -1,0 +1,20 @@
+#!/bin/bash
+NSONE_USER=tlloydaubry
+VPN_CONFIG=~/.vpn
+VPN_SECRET_FILE=/tmp/vpnsecret
+VPN_LOGS=~/.vpn/logs
+BASTION="${NSONE_USER}-bastion.$1"
+pushd $(pwd)
+cd "$VPN_CONFIG/${BASTION}"
+if grep -q prod0 "./${BASTION}.ovpn"; then
+    SECRET=prod0
+else
+    SECRET=production
+fi
+echo $SECRET
+/home/tristan/python/mfa --secret $SECRET &> /dev/null &
+echo openvpn --auth-user-pass ${VPN_SECRET_FILE} ./${BASTION}.ovpn # &> ${VPN_LOGS}/${BASTION}.log
+sleep 1
+cat ${VPN_SECRET_FILE}
+sudo openvpn --auth-user-pass ${VPN_SECRET_FILE} --config ./${BASTION}.ovpn # &> ${VPN_LOGS}/${BASTION}.log
+popd

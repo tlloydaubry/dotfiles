@@ -1,0 +1,6 @@
+#!/bin/bash
+. ~/.bashrc
+POP=$1
+nsone-prod-deploy playbooks/metricbeat.yml "$POP"
+nsone-prod-shell "$POP" "restart metricbeat ||  systemctl restart metricbeat.service"
+nsone-prod-shell "$POP" "restart telegraf ||  systemctl restart telegraf.service"

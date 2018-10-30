@@ -1,0 +1,2 @@
+gopass -c github
+echo "tlloydaubry" | git fetch

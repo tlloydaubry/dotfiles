@@ -1,0 +1,8 @@
+#!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+AIRPORT_FILE=$DIR/airport-codes.csv
+AIRPORT_CODE=$(echo $1 | awk '{print toupper($0)}')
+#echo $AIRPORT_CODE
+LINE_NUMBER=$(cat $AIRPORT_FILE | cut -d, -f12 | grep -n $AIRPORT_CODE | cut -f1 -d:)
+#echo $LINE_NUMBER
+head -n ${LINE_NUMBER} ${AIRPORT_FILE} | tail -1
